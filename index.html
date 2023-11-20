@@ -7,39 +7,44 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             height: 100vh;
-            margin: 0;
+            /*margin: 0;*/
         }
 
-        form {
-            text-align: center;
-        }
+        /*body {*/
+        /*    text-align: center;*/
+        /*}*/
     </style>
 </head>
 <body>
 
-<form id="calculatorForm">
-    <label for="num1">Number 1:</label>
-    <input type="number" id="num1" name="num1" required>
 
-    <label for="operator">Operator:</label>
-    <select id="operator" name="operator" required>
-        <option value="1">+</option>
-        <option value="2">-</option>
-        <option value="3">*</option>
-        <option value="4">/</option>
-    </select>
+<div>
+    <form id="calculatorForm">
+        <label for="num1">Number 1:</label>
+        <input type="number" id="num1" name="num1" required>
 
-    <label for="num2">Number 2:</label>
-    <input type="number" id="num2" name="num2" required>
+        <label for="operator">Operator:</label>
+        <select id="operator" name="operator" required>
+            <option value="1">+</option>
+            <option value="2">-</option>
+            <option value="3">*</option>
+            <option value="4">/</option>
+        </select>
 
-    <button type="button" onclick="calculate()">Calculate</button>
-</form>
+        <label for="num2">Number 2:</label>
+        <input type="number" id="num2" name="num2" required>
 
-<p id="result">Result: </p>
+        <button type="button" onclick="calculate()">Calculate</button>
+    </form>
+    <p id="calculator_result">Calculator Result: </p>
+</div>
+<hr>
+<div>
+    <button type="button" onclick="bot()">Create Random 1000 calculation</button>
+    <p id="bot_result">Bot Result: </p>
+</div>
+
 
 <script>
     function calculate() {
@@ -51,11 +56,23 @@
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                document.getElementById('result').innerHTML = "Result: " + xhr.responseText;
+                document.getElementById('calculator_result').innerHTML = "Calculator Result: " + xhr.responseText;
             }
         };
 
-        xhr.open("GET", "calculator_backend.php?&num1=" + num1 + "&operator=" + operator + "&num2=" + num2);
+        xhr.open("GET", "calculator_backend.php?action=calculator&num1=" + num1 + "&operator=" + operator + "&num2=" + num2);
+        xhr.send();
+    }
+
+    function bot() {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                document.getElementById('bot_result').innerHTML = "Result: " + xhr.responseText;
+            }
+        };
+
+        xhr.open("GET", "calculator_backend.php?action=bot");
         xhr.send();
     }
 </script>
