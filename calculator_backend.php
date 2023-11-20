@@ -1,7 +1,6 @@
 <?php
 header("Access-Control-Allow-Methods: GET");
 $action = htmlspecialchars($_GET['action']);//security for xss
-//echo $action;
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($action)) {
     if ($action == 'calculator')
         calculator();
@@ -59,15 +58,7 @@ function bot()
         $fileName = $directoryName . '/' . date('Y-m-d-H-i-s') . '.json';
         file_put_contents($fileName, $jsonData);
         echo "File saved to " . $fileName . " successfully".PHP_EOL;
-        //create link to open new tab
         echo "<a href='$fileName' target='_blank'>Open file</a>";
-
-//        $file = fopen($fileName, "r") or die("Unable to open file!");
-//        //Output a line of the file until the end is reached
-//        while (!feof($file)) {
-//            echo fgets($file) . "<br>";
-//        }
-//        fclose($file);
 
     } catch (Exception $e) {
         echo 'Caught exception: ', $e->getMessage(), "\n";
